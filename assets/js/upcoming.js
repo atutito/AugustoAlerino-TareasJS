@@ -11,49 +11,15 @@ try{
   let fechaActual = Date.parse(data.currentDate);
 
 let fichas = data.events;
-console.log(fichas)
 let fichasFuturas= [];
-  for (let ficha of fichas) {
-        if(Date.parse(ficha.date) > fechaActual){
-            fichasFuturas.push(ficha)
-            categorias.push(ficha.category);
-        }}
-  console.log(fichasFuturas)
-  let uniqueCats = [...new Set(categorias)];
-  console.log(uniqueCats);
-  tarjetas(fichasFuturas, 'cuerpo')
-  crearChecks(fichasFuturas);
 
-  function filtrarCategorias(arrayCategorias, arrayObjetos) {
-    return arrayCategorias.length === 0 ? arrayObjetos : arrayObjetos.filter(elemento => arrayCategorias.includes(elemento.category));
-}
-filtrarCategorias(uniqueCats,fichasFuturas)
+// SE MUESTRAN LAS CARDS PRÓXIMAS A LA FECHA ACTUAL
 
-let arrayTrimeado = [];
-let checkboxes = document.querySelectorAll('input[type=checkbox]')
-checkboxes.forEach( checkbox  => checkbox.addEventListener('change',() => { 
-    let chequeados = [...checkboxes].filter(checkbox => checkbox.checked).map(elemento => elemento.nextElementSibling.innerHTML)
-     
-    arrayTrimeado = chequeados.map(element => {
-        return element.trim()});
-    console.log(arrayTrimeado);
-    filtroCruzado(fichas);
-}))
-
-function filtroCruzado(array){
-    let tarjetasFiltradas = filtrarCategorias(arrayTrimeado, array);
-    let checkFiltrados = busquedaPorInput(inputValue, tarjetasFiltradas);
-    tarjetas(checkFiltrados, 'cuerpo');
-}
-filtroCruzado(fichasFuturas);
-}
-catch(err){
-    console.log(err)
-}
-}
-
-traerDatos();
-
+for(let cartas of fichas) {
+    if(Date.parse(cartas.date) > fechaActual){
+    fichasFuturas.push(cartas);
+    };
+};
 
 // SE LLAMAN LAS CARDS DINÁMICAMENTE
 function tarjetas(array, contenedor) {
@@ -94,9 +60,8 @@ function crearChecks(array){
     for (categoria of array){
         categorias.push(categoria.category);
     }
-    const dupCats = categorias.filter((cat, indice) => {
-        return categorias.indexOf(cat) === indice;
-    });
+    const dupCats = new Set(categorias);
+
     let fragmento2 = new DocumentFragment();
     for (let elemento of dupCats){
         let div = document.createElement('div');
@@ -109,7 +74,7 @@ function crearChecks(array){
     };
     busqueda.appendChild(fragmento2);
 }
-crearChecks(fichas);
+crearChecks(fichasFuturas);
 
 
 // SE ESCUCHAN LAS CHECKBOXES, SE GENERA ARRAY DE LABELS
@@ -120,7 +85,6 @@ checkboxes.forEach( checkbox  => checkbox.addEventListener('change',() => {
      
     arrayTrimeado = chequeados.map(element => {
         return element.trim()});
-    console.log(arrayTrimeado);
     filtroCruzado(fichas);
 }))
 
@@ -141,7 +105,6 @@ const input = filtroBusqueda.addEventListener('keyup', (e) => {
 function busquedaPorInput(valor, arrayObjetos) {
     if (valor == '') return arrayObjetos;
     let arrayNuevo = arrayObjetos.filter(el => el.name.toLowerCase().includes(valor.toLowerCase().trim()))
-    console.log(arrayNuevo);
     return arrayNuevo;
 }
 
@@ -152,3 +115,10 @@ function filtroCruzado(array){
     let checkFiltrados = busquedaPorInput(inputValue, tarjetasFiltradas);
     tarjetas(checkFiltrados, 'cuerpo');
 }
+}
+catch(err){
+    cuerpo.innerHTML =  '<div class="w-100"><h5> Server error, please reload.</h5></div>' 
+}
+}
+
+traerDatos();

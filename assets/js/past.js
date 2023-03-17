@@ -6,87 +6,17 @@ async function traerDatos() {
 try{
   const response = await fetch(UrlApi)
   const data = await response.json()
-  let categorias = [];
-
   let fechaActual = Date.parse(data.currentDate);
 
-let fichas = data.events;
-console.log(fichas)
-let fichasPasadas= [];
-  for (let ficha of fichas) {
-        if(Date.parse(ficha.date) < fechaActual){
-            fichasPasadas.push(ficha)
-            categorias.push(ficha.category);
-        }}
-  console.log(fichasPasadas)
-  let uniqueCats = [...new Set(categorias)];
-  console.log(uniqueCats);
-  tarjetas(fichasPasadas, 'cuerpo')
-  crearChecks(fichasPasadas);
+let cartas = data.events;
 
-  function filtrarCategorias(arrayCategorias, arrayObjetos) {
-    return arrayCategorias.length === 0 ? arrayObjetos : arrayObjetos.filter(elemento => arrayCategorias.includes(elemento.category));
-}
-filtrarCategorias(uniqueCats,fichasPasadas)
+// SE MUESTRAN LAS CARDS PASADAS LA FECHA ACTUAL
 
-let arrayTrimeado = [];
-let checkboxes = document.querySelectorAll('input[type=checkbox]')
-checkboxes.forEach( checkbox  => checkbox.addEventListener('change',() => { 
-    let chequeados = [...checkboxes].filter(checkbox => checkbox.checked).map(elemento => elemento.nextElementSibling.innerHTML)
-     
-    arrayTrimeado = chequeados.map(element => {
-        return element.trim()});
-    console.log(arrayTrimeado);
-    filtroCruzado(fichas);
-}))
-
-function filtroCruzado(array){
-    let tarjetasFiltradas = filtrarCategorias(arrayTrimeado, array);
-    let checkFiltrados = busquedaPorInput(inputValue, tarjetasFiltradas);
-    tarjetas(checkFiltrados, 'cuerpo');
-}
-filtroCruzado(fichasPasadas);
-}
-catch(err){
-    console.log(err)
-}
-}
-
-traerDatos();
-
-
-
-
-
-// const fichas = [];
-// const fechaActual = 0;
-
-// function traerDatos() {
-// fetch('https://mindhub-xj03.onrender.com/api/amazing')
-//   .then(response => response.json())
-//   .then(data => {
-//     fechaActual = Date.parse(data.currentDate)
-//     for (const key in data.events) {
-//         if(Date.parse(key.date) < fechaActual){
-//             fichas.push(key)
-//         }}})
-//   .catch(err => err.json())
-// }
-// traerDatos();
-
-// console.log(fichas);
-
-// // SE MUESTRAN LAS CARDS PASADAS LA FECHA ACTUAL
-// const fechaActual = Date.parse(eventsData.currentDate);
-
-// fichas = [];
-// for(let cartas of eventsData.events) {
-//     if(Date.parse(cartas.date) < fechaActual){
-//     fichas.push(cartas);
-//     };
-// };
-
-// console.log(fichas);
+for(let carta of cartas) {
+    if(Date.parse(carta.date) < fechaActual){
+    fichas.push(carta);
+    };
+};
 
 // SE LLAMAN LAS CARDS DINÁMICAMENTE
 
@@ -128,9 +58,7 @@ function crearChecks(array){
     for (categoria of array){
         categorias.push(categoria.category);
     }
-    const dupCats = categorias.filter((cat, indice) => {
-        return categorias.indexOf(cat) === indice;
-    });
+    const dupCats = new Set(categorias);
     let fragmento2 = new DocumentFragment();
     for (let elemento of dupCats){
         let div = document.createElement('div');
@@ -154,7 +82,6 @@ checkboxes.forEach( checkbox  => checkbox.addEventListener('change',() => {
      
     arrayTrimeado = chequeados.map(element => {
         return element.trim()});
-    console.log(arrayTrimeado);
     filtroCruzado(fichas);
 }))
 
@@ -175,7 +102,6 @@ const input = filtroBusqueda.addEventListener('keyup', (e) => {
 function busquedaPorInput(valor, arrayObjetos) {
     if (valor == '') return arrayObjetos;
     let arrayNuevo = arrayObjetos.filter(el => el.name.toLowerCase().includes(valor.toLowerCase().trim()))
-    console.log(arrayNuevo);
     return arrayNuevo;
 }
 
@@ -186,3 +112,11 @@ function filtroCruzado(array){
     let checkFiltrados = busquedaPorInput(inputValue, tarjetasFiltradas);
     tarjetas(checkFiltrados, 'cuerpo');
 }
+
+}
+catch(err){
+    cuerpo.innerHTML =  '<div class="w-100"><h5> Server error, please reload.</h5></div>' 
+}
+}
+
+traerDatos();
