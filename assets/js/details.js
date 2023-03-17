@@ -17,7 +17,7 @@ try{
         let tarjeta = document.createElement('div');
                 tarjeta.innerHTML = `<div class="card mb-3" style="max-width: 540px;">
                                     <div class="row no-gutters">
-                                        <div class="col-md-4 h-50">
+                                        <div class="col-md-4">
                                             <img src="${evento.image}" class="card-img-top" alt="${evento.name}" style="width: 100; height: 30vw; object-fit: cover">
                                         </div>
                                         <div class="col-md-8">
@@ -33,7 +33,7 @@ try{
                                             <p class="card-text mb-0"><small class="text-muted">Price: $${evento.price}</small></p>
                                         </div>
                                         <div class="btn-holder">
-                                             <input type="button"  class="btn btn-danger me-5 position-relative " value="Back" onclick="history.back()" style="float:right; bottom: 0">
+                                             <input type="button"  class="btn btn-danger me-5 position-relative mb-3" value="Back" onclick="history.back()" style="float:right; bottom: 0">
                                          </div>
                                         </div>
                                     </div>
