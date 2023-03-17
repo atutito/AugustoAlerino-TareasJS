@@ -327,7 +327,7 @@ categoriasFut(catFuturas,arrayRevenuesFut,arrayAsistenciaFutura);
 
 }
 catch(err){
-    console.log("Server error, please reload.")
+    cuerpo.innerHTML =  '<div class="w-100"><h5> Server error, please reload.</h5></div>' 
 }
 }
 
