@@ -17,10 +17,9 @@ try{
         let tarjeta = document.createElement('div');
                 tarjeta.innerHTML = `<div class="card mb-3">
                 
-                                        <div class="col-xl-8">
+                                        <div class="card-body">
                                             <img src="${evento.image}" class="card-img" alt="${evento.name}">
-                                            <div class="card-body">
-                                            <h5 class="card-title">${evento.name}</h5>
+                                            <h5 class="card-title mt-2">${evento.name}</h5>
                                             <p class="card-text mt-1" style="text-align: center"><big>${evento.description}</big></p>
                                             <p class="card-text mb-0"><small class="text-muted">Date: ${evento.date}</small></p>
                                             <p class="card-text mb-0"><small class="text-muted">Category: ${evento.category}</small></p>
@@ -32,10 +31,8 @@ try{
                                         </div>
                                         <div class="btn-holder">
                                              <input type="button"  class="btn btn-danger me-5 position-relative mb-3" value="Back" onclick="history.back()" style="float:right; bottom: 0">
-                                         </div>
-                                         </div>
-
-                                </div>`
+                                        </div>
+                                    </div>`
     container.appendChild(tarjeta)
     console.log(container)
 }
