@@ -15,12 +15,10 @@ try{
     function mostrarTarjeta(idContainer){ 
         const container = document.getElementById(idContainer)
         let tarjeta = document.createElement('div');
-                tarjeta.innerHTML = `<div class="card mb-3" style="max-width: 540px;">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-4">
-                                            <img src="${evento.image}" class="card-img-top" alt="${evento.name}" style="width: 100; height: 30vw; object-fit: cover">
-                                        </div>
-                                        <div class="col-md-8">
+                tarjeta.innerHTML = `<div class="card mb-3">
+                
+                                        <div class="col-xl-8">
+                                            <img src="${evento.image}" class="card-img" alt="${evento.name}">
                                             <div class="card-body">
                                             <h5 class="card-title">${evento.name}</h5>
                                             <p class="card-text mt-1" style="text-align: center"><big>${evento.description}</big></p>
@@ -35,8 +33,8 @@ try{
                                         <div class="btn-holder">
                                              <input type="button"  class="btn btn-danger me-5 position-relative mb-3" value="Back" onclick="history.back()" style="float:right; bottom: 0">
                                          </div>
-                                        </div>
-                                    </div>
+                                         </div>
+
                                 </div>`
     container.appendChild(tarjeta)
     console.log(container)

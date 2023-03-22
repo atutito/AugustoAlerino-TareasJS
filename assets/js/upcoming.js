@@ -49,7 +49,7 @@ function tarjetas(array, contenedor) {
     }
 }
 
-tarjetas(fichas, 'cuerpo');
+tarjetas(fichasFuturas, 'cuerpo');
 
 
 // SE CREAN LAS ETIQUETAS DE LOS INPUTS DINÁMICAS
